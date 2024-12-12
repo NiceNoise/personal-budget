@@ -94,6 +94,15 @@ h2 {
     margin-bottom: 10px;
 }
 
+h3 {
+    text-align: left;
+    font-size: 1rem;
+    color: var(--font-color-h3);
+
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+
 .option {
     margin-left: 0px;
     margin-top: 5px;
@@ -238,6 +247,18 @@ label {
 
 .transaction-detail {
     width: 50%; /* Distribuye las columnas en partes iguales */
+    text-align: left; /* Centra el texto en las celdas */
+    padding: 0px; /* Añade algo de padding para mejorar la legibilidad */  
+    /*border: 1px solid #234;*/
+}
+
+.filter-table {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Elimina espacios entre celdas */
+}
+
+.filter-detail {
+    width: 33.33%; /* Distribuye las columnas en partes iguales */
     text-align: left; /* Centra el texto en las celdas */
     padding: 0px; /* Añade algo de padding para mejorar la legibilidad */  
     /*border: 1px solid #234;*/

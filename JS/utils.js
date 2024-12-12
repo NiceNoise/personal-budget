@@ -1,17 +1,3 @@
-// Funciones de formateo (como en el ejemplo anterior)
-function formatearFecha(fecha) {
-    const dia = fecha.getDate().toString().padStart(2, '0');
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    const año = fecha.getFullYear();
-    return `${dia}/${mes}/${año}`;
-}
-
-function formatearHora(fecha) {
-    const horas = fecha.getHours().toString().padStart(2, '0');
-    const minutos = fecha.getMinutes().toString().padStart(2, '0');
-    const segundos = fecha.getSeconds().toString().padStart(2, '0');
-    return `${horas}:${minutos}:${segundos}`;
-}
 
 function semaforoSoles(monto){
     console.log("Semáforo Soles");
