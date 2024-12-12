@@ -8,9 +8,10 @@
     --font-color-main: rgb(107, 101, 101);
     --font-color-h1: black;
     --font-color-h2: black;
-    
-    --boton-color-registro:#4CAF50;
-    --boton-color-historial:#2196F3;;
+    --font-color-subtitle: black;
+
+    --boton-color-registro:#2196F3;
+    --boton-color-historial:#2196F3;
 
     --border-radius-contenedor: 10px;
     --border-radius-input: 5px;
@@ -29,7 +30,6 @@ body {
     color: var(--font-color-main);
     
     background-color: var(--background-color-main);
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,6 +66,7 @@ section{
     border: 1px solid #ddd;
     
     padding-left: 10px;
+    padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
     
@@ -78,40 +79,35 @@ section{
 
 h1 {
     text-align: center;
-    font-size: 1.75rem;
-    color: var(--font--color-h1);
+    font-size: 1.50rem;
+    color: var(--font-color-h1);
 
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 h2 {
-    text-align: left;
+    text-align: center;
     font-size: 1.25rem;
-    color: var(--font--color-h2);
+    color: var(--font-color-h2);
     
     margin-bottom: 10px;
 }
 
-.pInfo {
-    margin-left: 15px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.pOpcion {
+.option {
     margin-left: 0px;
     margin-top: 5px;
     margin-bottom: 5px;
+
+    color: var(--font-color-subtitle);
+    font-weight: bold;
 }
 
 
 .form-group {
     margin-left: 15px;
-    margin-right: 25px;
-    
+    margin-right: 15px;
     margin-bottom: 15px;
-
 }
 
 .radio-group {
@@ -216,4 +212,42 @@ label {
 
 .extra-balance{
     color: green;
+}
+
+.balance-table {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Elimina espacios entre celdas */
+}
+
+.balance-head, .balance-detail {
+    width: 33.33%; /* Distribuye las columnas en partes iguales */
+    text-align: center; /* Centra el texto en las celdas */
+    padding: 0px; /* Añade algo de padding para mejorar la legibilidad */  
+   /* border: 1px solid #234 */
+}
+
+.balance-head{
+    color: var(--font-color-subtitle);
+    font-weight: bold; /* Hace el texto de los encabezados más grueso */
+}
+
+.transaction-table {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Elimina espacios entre celdas */
+}
+
+.transaction-detail {
+    width: 50%; /* Distribuye las columnas en partes iguales */
+    text-align: left; /* Centra el texto en las celdas */
+    padding: 0px; /* Añade algo de padding para mejorar la legibilidad */  
+    /*border: 1px solid #234;*/
+}
+
+.box-option {
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+    /*font-size: 16px;*/
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
