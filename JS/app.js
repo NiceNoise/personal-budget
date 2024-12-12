@@ -1,3 +1,61 @@
+//----------------------------------------------------------------
+//------------------ Begin: Global Variables ---------------------
+//----------------------------------------------------------------
+
+const eWallet= new Budget([0.00,0.00]);
+
+
+//----------------------------------------------------------------
+//--------------- Begin: Get Transaction from Form ---------------
+//----------------------------------------------------------------
+
+//DOM Varibale
+const transactionForm= document.getElementById('transactionForm');
+const selectCategory = document.getElementById('category');
+
+//Event Listener
+transactionForm.addEventListener('submit',submitRecordTransaction);
+
+//function triggered by submit
+function submitRecordTransaction(event){
+    event.preventDefault();
+    getDataEntryTransactionForm();
+    //updateBalance();
+}
+
+//functions
+function getDataEntryTransactionForm() {
+
+    // DOM
+    let type = document.querySelector('input[name="type"]:checked').value;
+    let currency = document.querySelector('input[name="currency"]:checked').value;
+    let amount= parseFloat(document.getElementById('amount').value);
+    let category  = selectCategory.options[selectCategory.selectedIndex].value;
+    let description= document.getElementById('description').value;
+
+    //create a new transaction
+    const trx= new Transaction(type,amount,currency,category,description);
+    
+
+    // add to eWallet
+    let message = eWallet.addTransaction(trx)
+    console.log(trx);
+    console.log(message);
+    console.log(eWallet);
+    
+    // clean form
+    transactionForm.reset();
+    
+}
+
+
+
+//----------------------------------------------------------------
+//---------------------------- Borrador --------------------------
+//----------------------------------------------------------------
+
+/*
+
 //Definición de Variables y Constantes
 
 let movimientos = [];  // Array para almacenar movimientos
@@ -153,3 +211,5 @@ function funcionMostrarHistorialxMontoSimple(){
         listaHistorial.appendChild(li);
     });
 }
+
+*/

@@ -229,38 +229,38 @@ label {
 }
 
 .balance-head, .balance-detail {
-    width: 33.33%; /* Distribuye las columnas en partes iguales */
-    text-align: center; /* Centra el texto en las celdas */
-    padding: 0px; /* Añade algo de padding para mejorar la legibilidad */  
+    width: 50%; 
+    text-align: center; 
+    padding: 0px;   
    /* border: 1px solid #234 */
 }
 
 .balance-head{
     color: var(--font-color-subtitle);
-    font-weight: bold; /* Hace el texto de los encabezados más grueso */
+    font-weight: bold; 
 }
 
 .transaction-table {
-    width: 100%; /* Ocupa todo el ancho del contenedor */
-    border-collapse: collapse; /* Elimina espacios entre celdas */
+    width: 100%; 
+    border-collapse: collapse; 
 }
 
 .transaction-detail {
-    width: 50%; /* Distribuye las columnas en partes iguales */
-    text-align: left; /* Centra el texto en las celdas */
-    padding: 0px; /* Añade algo de padding para mejorar la legibilidad */  
+    width: 50%;  
+    text-align: left; 
+    padding: 0px;   
     /*border: 1px solid #234;*/
 }
 
 .filter-table {
-    width: 100%; /* Ocupa todo el ancho del contenedor */
-    border-collapse: collapse; /* Elimina espacios entre celdas */
+    width: 100%; 
+    border-collapse: collapse; 
 }
 
 .filter-detail {
-    width: 33.33%; /* Distribuye las columnas en partes iguales */
-    text-align: left; /* Centra el texto en las celdas */
-    padding: 0px; /* Añade algo de padding para mejorar la legibilidad */  
+    width: 33.33%;
+    text-align: left; 
+    padding: 0px; /*   
     /*border: 1px solid #234;*/
 }
 

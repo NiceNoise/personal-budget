@@ -1,18 +1,16 @@
 function Budget(initialBalances) {
-    this.currencies = ['PEN', 'USD', 'EUR']
+    this.currencies = ['PEN', 'USD']
     this.balances = initialBalances;
     this.movements = [];
   }
   
-  Budget.prototype.addMovement= function (transaction){
+  Budget.prototype.addTransaction= function (transaction){
   
     let index;
     switch (transaction.currency) {
       case 'PEN': index = 0;
         break;
       case 'USD': index = 1;
-        break;
-      case 'EUR': index = 2;
         break;
     }
   
@@ -22,14 +20,14 @@ function Budget(initialBalances) {
           return 'not enough balance on currency ' + transaction.currency + '.';
         } else {
           this.balances[index] -= transaction.amount;
-          movements.push(transaction);
+          this.movements.push(transaction);
           return 'sucessful movement.'
         }
         break;
   
       case 'credit':
         this.balances[index] += transaction.amount;
-        movements.push(transaction);
+        this.movements.push(transaction);
         return 'sucessful movement.'
         break;
     };
