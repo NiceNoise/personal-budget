@@ -7,121 +7,200 @@
 </head>
 <body>
     <main class="container">
-        <h1>Gestión de Caja Chica</h1>
+        <h1>Personal Cash Flow Management</h1>
 
         <section>
-            <h2>Balance General</h2>
-            <p class="pInfo" id="balanceSoles">PEN: S/. 0.00</p>
-            <p class="pInfo" id="balanceDolares">USD: $. 0.00</p>
-        </section>
-
-        <section>
-            <h2>Tipo de Cambio</h2>
-            <p class="pInfo" id="tipoCambioCompra">Compra: 3.8586732</p>
-            <p class="pInfo" id="tipoCambioVenta">Venta: 3.7123642</p>
-            
+            <h2>General Balance</h2>
+            <table class="balance-table">
+                <thead>
+                    <tr>
+                        <th class="balance-head">PEN</th>
+                        <th class="balance-head">USD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="balance-detail" id="balanceBoardPEN">S/. 0.00</td>
+                        <td class="balance-detail" id="balanceBoardUSD">$. 0.00</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
         
         <section>
-            <h2>Registro de Movimientos</h2>
+            <h2>Transaction Record</h2>
 
-            <form id="formularioMovimiento">
-                
-                <div class="form-group">
-                    <p class="pOpcion">Tipo de Movimiento:</p>
-                    <div class="radio-group">
-                        <label>
-                            <input 
-                                type="radio" 
-                                name="tipoMovimiento" 
-                                value="ingreso"
-                                required
-                            > Ingreso
-                        </label>
-                        <label>
-                            <input 
-                                type="radio" 
-                                name="tipoMovimiento" 
-                                value="egreso"
-                                required
-                            > Egreso
-                        </label>
-                    </div>
-                </div>
+            <form id="transactionForm">
+
+                <table class="transaction-table">
+                    <tbody>
+                        <tr>
+                            <td class="transaction-detail">
+                                <div class="form-group">
+                                    <p class="option">Type:</p>
+                                    <div class="radio-group">
+                                        <label>
+                                            <input 
+                                                type="radio" 
+                                                name="type" 
+                                                value="credit"
+                                                required
+                                            > Credit
+                                        </label>
+                                        <label>
+                                            <input 
+                                                type="radio" 
+                                                name="type" 
+                                                value="debit"
+                                                required
+                                            > Debit
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td class="transaction-detail">
+                                <div class="form-group">
+                                    <p class="option">Currency:</p>
+                                    <div class="radio-group">
+                                        <label>    
+                                            <input 
+                                                type="radio" 
+                                                name="currency" 
+                                                value="PEN"
+                                                required
+                                            > (S/.) PEN
+                                        </label>
+                                        <label>
+                                            <input 
+                                                type="radio" 
+                                                name="currency" 
+                                                value="USD"
+                                                required
+                                            > ($.) USD
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="transaction-detail">
+                                <div class="form-group">
+                                    <p class="option">Amount:</p>
+                                    <input 
+                                        class="box-option"
+                                        type="number" 
+                                        id="amount" 
+                                        name="amount" 
+                                        step="0.01" 
+                                        min="0" 
+                                        required
+                                    >
+                                </div>        
+
+                            </td>
+                            <td class="transaction-detail">
+                                <div class="form-group">
+                                    <p class="option">Category:</p>
+                                    <select class="box-option" id="category" name="category">
+                                        <!-- Las opciones se cargarán dinámicamente -->
+                                    </select>
+                                </div>
+
+                            </td>
+                        </tr>
+                    </tbody>    
+                </table>
 
                 <div class="form-group">
-                    <p class="pOpcion">Moneda:</p>
-                    <div class="radio-group">
-                        <label>    
-                            <input 
-                                type="radio" 
-                                name="moneda" 
-                                value="PEN"
-                                required
-                            > (S/.) PEN
-                        </label>
-                        <label>
-                            <input 
-                                type="radio" 
-                                name="moneda" 
-                                value="USD"
-                                required
-                            > ($.) USD
-                        </label>
-                    </div>
-                </div>
-            
-                <div class="form-group">
-                    <label for="monto">Monto:</label>
-                    <input 
-                        type="number" 
-                        id="monto" 
-                        name="monto" 
-                        step="0.01" 
-                        min="0" 
-                        required
-                    >
-                </div>        
-
-                <div class="form-group">
-                    <label for="descripcion">Descripción del Movimiento:</label>
+                    <p class="option">Description:</p>
                     <textarea 
-                        id="descripcion"
-                        name="descripcion"
-                        rows="1"
-                        placeholder="Escriba una breve descripción"
+                        id="description"
+                        name="description"
+                        rows="3"
+                        placeholder="Write a summary description."
                         required
                     ></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <button type="submit" class="btn">Registrar Movimiento</button>
+                    <button type="submit" class="btn">Record Transaction</button>
                 </div>
             </form>
     
         </section>
         
         <section>
-            <h2>Historial de Movimientos</h2>
-            <div class="form-group botonera">
-                <button type="button" id="mostrarHistorialxRegistro" class="btn btn-historial">
-                    Mostrar Historial (por orden de registro)
-                </button>
+            <h2>Transactions History</h2>
+            <h3>Filters:</h3>
+            <form id="filtersForm">
 
-                <button type="button" id="mostrarHistorialxMonto" class="btn btn-historial">
-                    Mostrar Historial (por orden de Monto)
-                </button>
-                     
-            </div>
+                <table class="filter-table">
+                    <tbody>
+                        <tr>
+                            <td class="filter-detail">
+                                <div class="form-group">
+                                    <p class="option">Type:</p>
+                                    <select class="box-option" id="filterType" name="filterType">
+                                        <option value="all">All</option>
+                                        <option value="credit">Credit</option>
+                                        <option value="debit">Debit</option>    
+                                    </select>
+                                </div>               
+                            </td>
+
+                            <td class="filter-detail">
+                                <div class="form-group">
+                                    <p class="option">Currency:</p>
+                                    <select class="box-option" id="filterCurrency" name="filterCurrency">
+                                        <option value="all">All</option>
+                                        <option value="PEN">PEN</option>
+                                        <option value="USD">USD</option>    
+                                    </select>
+                                </div>               
+                            </td>
+
+                            <td class="filter-detail">
+                                <div class="form-group">
+                                    <p class="option">Category:</p>
+                                    <select class="box-option" id="filterCategory" name="filterCategory">
+                                        <option value="all">All</option>
+                                        <option value="salary">Salary</option>
+                                        <option value="investments">Investments</option>    
+                                        <option value="freelance">Freelance</option>
+                                        <option value="feeding">Feeding</option>
+                                        <option value="transport">Trasnport</option>    
+                                        <option value="services">Services</option>
+                                        <option value="rent">Rent</option>
+                                        <option value="outfit">Outfit</option>    
+                                        <option value="studies">Studies</option>
+                                        <option value="entertainment">Entertainment</option>
+                                        <option value="others">Others</option>                    
+                                    </select>
+                                </div>               
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                    
+                <div class="form-group">
+                    <button type="submit" class="btn">Show Transactions History</button>
+                </div>
             
-            <div class="form-group historialContenedor" id="historialContenedor">
-                <ul class="listaHistorial" id="listaHistorial"></ul>
+            </form>   
+
+            <div class="form-group container-transactions-history">
+                <ul class="list-transactions-history" id="listTransactionsHistory"></ul>
             </div>   
             
         </section>
         
     </main>
 
+    <script src="JS/Transaction.js"></script>
+    <script src="JS/Budget.js"></script>
     <script src="JS/validators.js"></script>
     <script src="JS/utils.js"></script>
     <script src="JS/app.js"></script>

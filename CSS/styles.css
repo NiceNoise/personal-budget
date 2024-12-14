@@ -8,9 +8,9 @@
     --font-color-main: rgb(107, 101, 101);
     --font-color-h1: black;
     --font-color-h2: black;
-    
-    --boton-color-registro:#4CAF50;
-    --boton-color-historial:#2196F3;;
+    --font-color-subtitle: black;
+
+    --boton-color:#2196F3;
 
     --border-radius-contenedor: 10px;
     --border-radius-input: 5px;
@@ -29,7 +29,6 @@ body {
     color: var(--font-color-main);
     
     background-color: var(--background-color-main);
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -66,6 +65,7 @@ section{
     border: 1px solid #ddd;
     
     padding-left: 10px;
+    padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
     
@@ -78,40 +78,44 @@ section{
 
 h1 {
     text-align: center;
-    font-size: 1.75rem;
-    color: var(--font--color-h1);
+    font-size: 1.50rem;
+    color: var(--font-color-h1);
 
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
 h2 {
-    text-align: left;
+    text-align: center;
     font-size: 1.25rem;
-    color: var(--font--color-h2);
+    color: var(--font-color-h2);
     
     margin-bottom: 10px;
 }
 
-.pInfo {
+h3 {
+    text-align: left;
+    font-size: 1rem;
+    color: var(--font-color-h3);
+
     margin-left: 15px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
-.pOpcion {
+.option {
     margin-left: 0px;
     margin-top: 5px;
     margin-bottom: 5px;
+
+    color: var(--font-color-subtitle);
+    font-weight: bold;
 }
 
 
 .form-group {
     margin-left: 15px;
-    margin-right: 25px;
-    
+    margin-right: 15px;
     margin-bottom: 15px;
-
 }
 
 .radio-group {
@@ -150,7 +154,7 @@ label {
 }
 
 .btn {
-    background-color: var(--boton-color-registro);
+    background-color: var(--boton-color);
     color: white;
 
     width: 100%;
@@ -167,26 +171,17 @@ label {
     opacity: 0.8;
 }
 
-.btn-historial {
-    background-color: var(--boton-color-historial);     
-}
 
-.botonera{
-    display: flex;
-    flex-direction: column;
-    gap:5px;
-}
-
-.historialContenedor {
+.container-transactions-history {
    margin-top: 0px;
 }
 
-.listaHistorial {
+.list-transactions-history {
     list-style-type: none;
     padding: 0;
 }
 
-.listaHistorial li {
+.list-transactions-history li {
     background-color: var(--background-color-output); 
 
     margin-bottom: 5px;
@@ -198,22 +193,78 @@ label {
     justify-content: space-around;
 }
 
-.ingreso {
+.credit {
     color: blue;
 }
 
-.egreso {
+.debit {
     color: red;
 }
+
+.total {
+    color: green;
+}
+
 
 .low-balance{
     color: red;
 }
 
 .regular-balance{
-    color:rgb(196, 84, 20);
+    color:yellow;
 }
 
-.extra-balance{
+.high-balance{
     color: green;
+}
+
+.balance-table {
+    width: 100%; /* Ocupa todo el ancho del contenedor */
+    border-collapse: collapse; /* Elimina espacios entre celdas */
+    font-size: 1rem;
+}
+
+.balance-head, .balance-detail {
+    width: 50%; 
+    text-align: center; 
+    padding: 0px;   
+   /* border: 1px solid #234 */
+}
+
+.balance-head{
+    color: var(--font-color-subtitle);
+    font-weight: bold; 
+}
+
+.transaction-table {
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+.transaction-detail {
+    width: 50%;  
+    text-align: left; 
+    padding: 0px;   
+    /*border: 1px solid #234;*/
+}
+
+.filter-table {
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+.filter-detail {
+    width: 33.33%;
+    text-align: left; 
+    padding: 0px; /*   
+    /*border: 1px solid #234;*/
+}
+
+.box-option {
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }

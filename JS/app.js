@@ -1,155 +1,162 @@
-//Definición de Variables y Constantes
+//----------------------------------------------------------------
+//------------------ Begin: Global Variables ---------------------
+//----------------------------------------------------------------
 
-let movimientos = [];  // Array para almacenar movimientos
+const eWallet= new Budget([0.00,0.00]);
 
-const formularioMovimiento= document.getElementById('formularioMovimiento');
-const btnHistorialxRegistro = document.getElementById('mostrarHistorialxRegistro');
-const btnHistorialxMonto= document.getElementById('mostrarHistorialxMonto');
-const listaHistorial = document.getElementById('listaHistorial');
-const balanceSoles = document.getElementById('balanceSoles');
-const balanceDolares = document.getElementById('balanceDolares');
-const tipoCambioCompra =document.getElementById('tipoCambioCompra');
-const tipoCambioVenta =document.getElementById('tipoCambioVenta');
+//----------------------------------------------------------------
+//--------------- Begin: Get Transaction from Form ---------------
+//----------------------------------------------------------------
 
+//DOM Variable
+const transactionForm= document.getElementById('transactionForm');
 
-//Listener de Eventos
-formularioMovimiento.addEventListener('submit',submitRegistrarMovimiento);
-btnHistorialxRegistro.addEventListener('click', funcionMostrarHistorialxRegistroSimple);  
-btnHistorialxMonto.addEventListener('click',funcionMostrarHistorialxMontoSimple);
+//Event Listener
+transactionForm.addEventListener('submit',submitRecordTransaction);
 
-
-//funciones
-
-function submitRegistrarMovimiento(evento){
-    evento.preventDefault();
-    capturarDatosFormulario();
-    actualizarBalance();
+//function triggered by submit
+function submitRecordTransaction(event){
+    event.preventDefault();
+    getDataEntryTransactionForm();
+    updateBalanceBoard();
 }
 
-function actualizarBalance(){
+//functions called by submitRecordTransactions
+function getDataEntryTransactionForm() {
 
-    let resultado={
-        USD: 0.00,
-        PEN: 0.00
-      };
+    //DOM
+    const selectCategory = document.getElementById('category');
 
-    resultado = movimientos.reduce((acc, { moneda, monto }) => {
-        // Si la moneda ya existe en el acumulador, sumamos el monto
-        if (acc[moneda]) {
-          acc[moneda] += monto;
-        } else {
-          // Si la moneda no existe, la creamos con el monto inicial
-          acc[moneda] = monto;
-        }
-        return acc;
-      }, resultado);
-      
-      console.log(resultado);
+    // DOM
+    let type = document.querySelector('input[name="type"]:checked').value;
+    let currency = document.querySelector('input[name="currency"]:checked').value;
+    let amount= document.getElementById('amount').value;
+    let category  = selectCategory.options[selectCategory.selectedIndex].value;
+    let description= document.getElementById('description').value;
 
-    switch(semaforoSoles(resultado.PEN)){
-        case ('low'):
-            balanceSoles.classList.add("low-balance");
-            break;
-        case ('regular'):
-            balanceSoles.classList.add("regular-balance");
-            break;
-        case ('extra'):
-            balanceSoles.classList.add("extra-balance");
-            break;
+    //create a new transaction
+    const trx= new Transaction(type,amount,currency,category,description);
+    
+    // add to eWallet
+    let message = eWallet.addTransaction(trx)
+    
+    //alert(message);
+    //console.log(trx);
+    //console.log(eWallet);
+    //console.log(message);
+    
+    // clean form
+    transactionForm.reset();
+}
+
+function updateBalanceBoard(){
+
+    const balanceBoardPEN = document.getElementById("balanceBoardPEN");
+    const balanceBoardUSD = document.getElementById("balanceBoardUSD");
+
+    balanceBoardPEN.textContent=eWallet.getBalanceCurrency("PEN").toFixed(2);
+    balanceBoardUSD.textContent=eWallet.getBalanceCurrency("USD").toFixed(2);
+    
+    //console.log(eWallet.getBalanceCurrency("PEN"));
+    //console.log(eWallet.getBalanceCurrency("USD"));
+    
+}
+
+//----------------------------------------------------------------
+//----------------- Begin: Get Filters from Form -----------------
+//----------------------------------------------------------------
+
+//DOM Variable
+const filtersForm= document.getElementById('filtersForm');
+
+//Event Listener
+filtersForm.addEventListener('submit',submitShowTransactionsHistory);
+
+function submitShowTransactionsHistory(event){
+    event.preventDefault();
+    const transactionsFiltered=getFiltersOptions();
+    ShowTransactionsHistory(transactionsFiltered);
+}
+
+
+function getFiltersOptions (){
+
+    //DOM
+    const selectFilterType = document.getElementById("filterType");
+    const selectFilterCurrency = document.getElementById("filterCurrency");
+    const selectFilterCategory = document.getElementById("filterCategory");
+
+    // get selection values
+    let filterType=selectFilterType.options[selectFilterType.selectedIndex].value;
+    let filterCurrency=selectFilterCurrency.options[selectFilterCurrency.selectedIndex].value;
+    let filterCategory=selectFilterCategory.options[selectFilterCategory.selectedIndex].value;
+
+    let transactionsHistory = [...eWallet.movements];
+
+    //console.log(transactionsHistory);
+
+
+    if (filterType!=="all"){
+        transactionsHistory=transactionsHistory.filter(trx => trx.type === filterType);
     }
 
-    switch(semaforoDolares(resultado.USD)){
-        case ('low'):
-            balanceDolares.classList.add("low-balance");
-            break;
-        case ('regular'):
-            balanceDolares.classList.add("regular-balance");
-            break;
-        case ('extra'):
-            balanceDolares.classList.add("extra-balance");
-            break;
+    if (filterCurrency!=="all"){
+        transactionsHistory=transactionsHistory.filter(trx => trx.currency === filterCurrency);
     }
 
-    balanceSoles.textContent=`PEN: S/. ${(resultado.PEN).toFixed(2)}`;
-    balanceDolares.textContent=`USD: $. ${(resultado.USD).toFixed(2)}`;
+    if (filterCategory!=="all"){
+        transactionsHistory=transactionsHistory.filter(trx => trx.category === filterCategory);
+    }
 
+    //console.log(transactionsHistory);
+
+    return transactionsHistory;
 }
 
-function capturarDatosFormulario() {
 
-    // Obtener valores del formulario
-    let tipo = document.querySelector('input[name="tipoMovimiento"]:checked').value;
-    let moneda = document.querySelector('input[name="moneda"]:checked').value;
-    let monto= parseFloat(document.getElementById('monto').value);
-    let descripcion= document.getElementById('descripcion').value;
-    let fechaActual = new Date();
+function ShowTransactionsHistory(transactionsHistory,sumTotal){
 
-    //signo de importe
-    monto= tipo==='ingreso' ? monto : -monto;
+    const listTransactionsHistory= document.getElementById("listTransactionsHistory");
 
-    // Crear objeto de movimiento
-    const movimiento = {
-        tipo: tipo,
-        moneda: moneda,
-        monto: monto,
-        descripcion: descripcion,
-        fecha: formatearFecha(fechaActual),
-        hora: formatearHora(fechaActual)
-    };
+    //clean before info
+    listTransactionsHistory.innerHTML = '';
 
-    // Agregar al array de movimientos
-    movimientos.push(movimiento);
-
-    // Limpiar formulario
-    formularioMovimiento.reset();
-
-    console.log(movimientos);
-    
-}
-
-function funcionMostrarHistorialxRegistroSimple() {
-    
-    listaHistorial.innerHTML = ''; // Limpiar lista anterior
-
-    // Recorrer y mostrar movimientos
-    movimientos.forEach((mov, index) => {
+    // show all transactions filtered
+    transactionsHistory.forEach((trx, index) => {
         const li = document.createElement('li');
-        let descripcionAbreviada=mov.descripcion.substring(0,20);
         
-        li.textContent = `${index + 1} | ${mov.fecha} | ${mov.hora} | ${descripcionAbreviada} | (${mov.moneda}) ${(mov.monto).toFixed(2)}`;
+        li.textContent = `${index + 1} | ${trx.getFormattedDate()} | ${trx.getFormattedTime()} | ${trx.type} | ${trx.category} | (${trx.currency}) ${(trx.getSignedAmount()).toFixed(2)}`;
         
-        // Aplicar clase de color según tipo
-        li.classList.add(mov.tipo === 'ingreso' ? 'ingreso' : 'egreso');
+        //color
+        li.classList.add(trx.type === 'credit' ? 'credit' : 'debit');
         
-        listaHistorial.appendChild(li);
+        listTransactionsHistory.appendChild(li);
     });
+
+
+    //calcule Total PEN
+    const totalPEN = transactionsHistory.reduce((sum, transaction) => {
+        return transaction.currency === 'PEN' 
+            ? sum + transaction.getSignedAmount() 
+            : sum;
+    }, 0);
+
+    //calcule Total USD
+    const totalUSD = transactionsHistory.reduce((sum, transaction) => {
+        return transaction.currency === 'USD' 
+            ? sum + transaction.getSignedAmount() 
+            : sum;
+    }, 0);
+
+    //console.log(totalPEN);
+    //console.log(totalUSD);
+
+    //to show totals
+    const liTotals = document.createElement('li');
+    liTotals.textContent= `Total PEN S/. ${totalPEN} | Total USD $. ${totalUSD} `;
+    liTotals.classList.add('total');
+    listTransactionsHistory.appendChild(liTotals);
+
 }
 
 
-function funcionMostrarHistorialxMontoSimple(){
-    
-    listaHistorial.innerHTML = ''; // Limpiar lista anterior
-
-    //crear array ordenado, clonado de movimiento
-    const ordenadoxMonto = [...movimientos].sort((a, b) => {
-        // Primero por moneda
-        if (a.moneda !== b.moneda) {
-            return b.moneda.localeCompare(a.moneda);
-        }
-        // Luego por monto
-        return b.monto - a.monto;
-    });
-
-    // Recorrer y mostrar movimientos
-    ordenadoxMonto.forEach((mov, index) => {
-        const li = document.createElement('li');
-        let descripcionAbreviada=mov.descripcion.substring(0,20);
-        
-        li.textContent = `${index + 1} | ${mov.fecha} | ${mov.hora} | ${descripcionAbreviada} | (${mov.moneda}) ${(mov.monto).toFixed(2)}`;
-        
-        // Aplicar clase de color según tipo
-        li.classList.add(mov.tipo === 'ingreso' ? 'ingreso' : 'egreso');
-        
-        listaHistorial.appendChild(li);
-    });
-}
