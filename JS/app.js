@@ -134,22 +134,24 @@ function ShowTransactionsHistory(transactionsHistory,sumTotal){
     });
 
 
+    //calcule Total PEN
     const totalPEN = transactionsHistory.reduce((sum, transaction) => {
         return transaction.currency === 'PEN' 
             ? sum + transaction.getSignedAmount() 
             : sum;
     }, 0);
 
-
+    //calcule Total USD
     const totalUSD = transactionsHistory.reduce((sum, transaction) => {
         return transaction.currency === 'USD' 
             ? sum + transaction.getSignedAmount() 
             : sum;
     }, 0);
 
-    console.log(totalPEN);
-    console.log(totalUSD);
+    //console.log(totalPEN);
+    //console.log(totalUSD);
 
+    //to show totals
     const liTotals = document.createElement('li');
     liTotals.textContent= `Total PEN S/. ${totalPEN} | Total USD $. ${totalUSD} `;
     liTotals.classList.add('total');
