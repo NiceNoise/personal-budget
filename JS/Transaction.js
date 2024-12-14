@@ -29,3 +29,4 @@ function Transaction(type, amount, currency, category) {
     return this.type === 'credit' ? this.amount : -this.amount;
   }
   
+  //comentario
