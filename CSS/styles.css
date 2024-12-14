@@ -10,8 +10,7 @@
     --font-color-h2: black;
     --font-color-subtitle: black;
 
-    --boton-color-registro:#2196F3;
-    --boton-color-historial:#2196F3;
+    --boton-color:#2196F3;
 
     --border-radius-contenedor: 10px;
     --border-radius-input: 5px;
@@ -155,7 +154,7 @@ label {
 }
 
 .btn {
-    background-color: var(--boton-color-registro);
+    background-color: var(--boton-color);
     color: white;
 
     width: 100%;
@@ -172,26 +171,17 @@ label {
     opacity: 0.8;
 }
 
-.btn-historial {
-    background-color: var(--boton-color-historial);     
-}
 
-.botonera{
-    display: flex;
-    flex-direction: column;
-    gap:5px;
-}
-
-.historialContenedor {
+.container-transactions-history {
    margin-top: 0px;
 }
 
-.listaHistorial {
+.list-transactions-history {
     list-style-type: none;
     padding: 0;
 }
 
-.listaHistorial li {
+.list-transactions-history li {
     background-color: var(--background-color-output); 
 
     margin-bottom: 5px;
@@ -203,29 +193,35 @@ label {
     justify-content: space-around;
 }
 
-.ingreso {
+.credit {
     color: blue;
 }
 
-.egreso {
+.debit {
     color: red;
 }
+
+.total {
+    color: green;
+}
+
 
 .low-balance{
     color: red;
 }
 
 .regular-balance{
-    color:rgb(196, 84, 20);
+    color:yellow;
 }
 
-.extra-balance{
+.high-balance{
     color: green;
 }
 
 .balance-table {
     width: 100%; /* Ocupa todo el ancho del contenedor */
     border-collapse: collapse; /* Elimina espacios entre celdas */
+    font-size: 1rem;
 }
 
 .balance-head, .balance-detail {
@@ -268,7 +264,7 @@ label {
     width: 100%;
     height: 40px;
     padding: 5px 10px;
-    /*font-size: 16px;*/
+    font-size: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 4px;
 }

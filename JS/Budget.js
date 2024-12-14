@@ -1,3 +1,7 @@
+//----------------------------------------------------------------
+//------------------- Begin: Budget Defined -----------------
+//----------------------------------------------------------------
+
 function Budget(initialBalances) {
     this.currencies = ['PEN', 'USD']
     this.balances = initialBalances;
@@ -8,15 +12,13 @@ function Budget(initialBalances) {
   
     let index;
     switch (transaction.currency) {
-      case 'PEN': index = 0;
-        break;
-      case 'USD': index = 1;
-        break;
+      case 'PEN': index = 0;  break;
+      case 'USD': index = 1;  break;
     }
   
     switch (transaction.type) {
       case 'debit':
-        if (transaction.amount > balances[index]) {
+        if (transaction.amount > this.balances[index]) {
           return 'not enough balance on currency ' + transaction.currency + '.';
         } else {
           this.balances[index] -= transaction.amount;
@@ -33,3 +35,14 @@ function Budget(initialBalances) {
     };
   }
   
+  Budget.prototype.getBalanceCurrency = function(currency){
+  
+    let index;
+    switch (currency) {
+      case 'PEN': index = 0;  break;
+      case 'USD': index = 1;  break;
+    }
+
+    return this.balances[index];
+   
+  }

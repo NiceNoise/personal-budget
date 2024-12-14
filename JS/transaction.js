@@ -1,7 +1,11 @@
+//----------------------------------------------------------------
+//------------------- Begin: Transaction Defined -----------------
+//----------------------------------------------------------------
+
 function Transaction(type, amount, currency, category) {
     this.id = Date.now();
     this.type = type;
-    this.amount = parseFloat(amount).toFixed(2);   // actual currency have 2 decimals
+    this.amount = parseFloat(amount);   // actual currency have 2 decimals
     this.currency = currency;
     this.category = category;
     this.date = new Date();
