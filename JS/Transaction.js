@@ -28,4 +28,4 @@ function Transaction(type, amount, currency, category) {
   Transaction.prototype.getSignedAmount = function () {
     return this.type === 'credit' ? this.amount : -this.amount;
   }
-  
+

@@ -46,3 +46,16 @@ function Budget(initialBalances) {
     return this.balances[index];
    
   }
+
+  Budget.prototype.getTransactionbyID = function(id){
+
+    const parsedId = typeof id === 'number' ? id : Number(id);
+
+    const transaction = this.movements.find(
+      transaction => transaction.id === parsedId
+    );
+
+    return transaction;  
+
+  }
+
